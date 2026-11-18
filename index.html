@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sp1k3y's Vault — Cards & Community</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body class="quality-mid">
+
+<div id="laserLoadingScreen">
+  <div class="laser-arena">
+    <div class="laser-beam"></div>
+    <div class="laser-beam right"></div>
+    <div class="explosion-core"></div>
+  </div>
+  <div class="loading-title-text">SP1K3Y'S VAULT — READY</div>
+</div>
+
+<div class="app-layout">
+  <!-- Sidebar Navigation -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+      <div class="brand-badge"></div>
+      <h2>Sp1k3y's Vault</h2>
+      <button class="mobile-close-btn" id="mobileCloseBtn">&times;</button>
+    </div>
+    
+    <div class="sidebar-menu">
+      <button class="nav-item active" data-tab="cardsTab">💳 Cards Gallery</button>
+      <button class="nav-item" data-tab="casinoTab">🎲 Spikey Casino</button>
+      <button class="nav-item" data-tab="depositTab">💵 Secure Deposit</button>
+      <button class="nav-item" data-tab="chatTab">💬 Chat Room</button>
+      <button class="nav-item" data-tab="profileTab">👤 User Profile</button>
+      <button class="nav-item" data-tab="investTab">📈 Investment Vault</button>
+      <button class="nav-item" data-tab="ownerTab">🛡️ Owner Dashboard</button>
+    </div>
+
+    <div class="sidebar-footer">
+      <div class="user-status-widget">
+        <div class="status-dot"></div>
+        <span id="sidebarUsername">Guest User</span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main Content Area -->
+  <main class="main-content">
+    <header class="top-nav">
+      <button class="menu-toggle" id="menuToggle">☰</button>
+      <div class="top-title" id="topTitle">Cards Gallery</div>
+      <div class="top-user-area">
+        <div class="bank-balance-display">Balance: <span id="headerBalance">$34.87</span></div>
+        <div class="perf-toggle">
+          <select id="perfSelect" title="Performance Mode">
+            <option value="high">High FX</option>
+            <option value="mid" selected>Balanced</option>
+            <option value="low">Lite / Fast</option>
+          </select>
+        </div>
+      </div>
+    </header>
+
+    <div class="content-body">
+      <!-- 1. CARDS TAB -->
+      <section id="cardsTab" class="tab-content active">
+        <div class="section-header">
+          <h2>Exclusive Card Gallery</h2>
+          <p>Browse premium bank cards, virtual cards, and gift cards with instant secure checkout.</p>
+        </div>
+        <div class="card-controls">
+          <input type="text" id="cardSearch" placeholder="Search cards by bank, brand, or balance..." />
+          <select id="cardFilter">
+            <option value="all">All Cards</option>
+            <option value="bank">Bank Cards</option>
+            <option value="gift">Gift Cards</option>
+          </select>
+        </div>
+        <div class="cards-grid" id="cardsGrid">
+          <!-- Dynamically populated -->
+        </div>
+      </section>
+
+      <!-- 2. CASINO TAB -->
+      <section id="casinoTab" class="tab-content">
+        <div class="section-header">
+          <h2>Spikey Casino & Games</h2>
+          <p>Test your luck with provably fair mini-games. Play responsibly with secure vault balances.</p>
+        </div>
+        <div class="casino-grid">
+          <div class="casino-card">
+            <h3>🎰 Neon Slots</h3>
+            <p>Spin to win multipliers up to 50x your bet!</p>
+            <div class="slot-machine-box">
+              <div class="slot-reels" id="slotReels">💎 7️⃣ 🍒</div>
+              <div class="slot-controls">
+                <input type="number" id="slotBet" value="5" min="1" max="100">
+                <button class="btn-primary" id="spinBtn">Spin Reels</button>
+              </div>
+              <div id="slotResult" class="game-result-msg"></div>
+            </div>
+          </div>
+
+          <div class="casino-card">
+            <h3>🪙 Coin Flip Duel</h3>
+            <p>Double or nothing on a 50/50 flip.</p>
+            <div class="coin-box">
+              <div class="coin-visual" id="coinVisual">🪙</div>
+              <div class="coin-btns">
+                <button class="btn-primary" onclick="playCoinFlip('heads')">Heads</button>
+                <button class="btn-secondary" onclick="playCoinFlip('tails')">Tails</button>
+              </div>
+              <input type="number" id="coinBet" value="10" min="1" max="500">
+              <div id="coinResult" class="game-result-msg"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3. DEPOSIT TAB (Secure Deposit with Checkout & Check Validation) -->
+      <section id="depositTab" class="tab-content">
+        <div class="section-header">
+          <h2>Secure Deposit & Check Verification</h2>
+          <p>Deposit funds securely via digital check or card reload. Protected with zero-exploit validation checks.</p>
+        </div>
+        <div class="deposit-container">
+          <div class="deposit-form-card">
+            <h3>New Deposit Checkout</h3>
+            <form id="secureDepositForm">
+              <div class="form-group">
+                <label>Deposit Method</label>
+                <select id="depositMethod">
+                  <option value="check">Digital Check / Cashier Check</option>
+                  <option value="card">Linked Debit Card / Bank Transfer</option>
+                  <option value="gift">Gift Card Redemption Voucher</option>
+                </select>
+              </div>
+              <div class="form-group" id="checkNumberGroup">
+                <label>Check / Routing Number (9-12 digits)</label>
+                <input type="text" id="checkNumberInput" placeholder="e.g. 1029384756" maxlength="12">
+              </div>
+              <div class="form-group">
+                <label>Deposit Amount ($ USD)</label>
+                <input type="number" id="depositAmountInput" placeholder="25.00" min="1" max="10000" step="0.01" required>
+              </div>
+              <div class="checkout-preview-box" id="checkoutPreviewBox">
+                <h4>Checkout Preview & Verification</h4>
+                <div class="preview-row"><span>Subtotal:</span> <span id="prevSub">$0.00</span></div>
+                <div class="preview-row"><span>Security Verification Fee:</span> <span>$0.00 (Zero Fee)</span></div>
+                <div class="preview-row total"><span>Total Credited:</span> <span id="prevTotal">$0.00</span></div>
+              </div>
+              <button type="submit" class="btn-primary full-width">Process Secure Deposit</button>
+            </form>
+            <div id="depositMsg" class="game-result-msg"></div>
+          </div>
+
+          <div class="deposit-history-card">
+            <h3>Recent Deposits & Checks</h3>
+            <div class="deposit-list" id="depositHistoryList">
+              <div class="empty-state">No deposits recorded yet.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 4. CHAT TAB -->
+      <section id="chatTab" class="tab-content">
+        <div class="section-header">
+          <h2>Community Chat Room</h2>
+          <p>Connect with other vault members in real time.</p>
+        </div>
+        <div class="chat-container">
+          <div class="chat-messages" id="chatMessages"></div>
+          <div class="chat-input-area">
+            <input type="text" id="chatInput" placeholder="Type a message..." maxlength="250">
+            <button class="btn-primary" id="sendChatBtn">Send</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- 5. PROFILE TAB -->
+      <section id="profileTab" class="tab-content">
+        <div class="section-header">
+          <h2>User Profile & Settings</h2>
+          <p>Manage your vault credentials and profile banner.</p>
+        </div>
+        <div class="profile-card">
+          <div class="profile-header-banner" id="profileBanner"></div>
+          <div class="profile-body">
+            <div class="profile-avatar" id="profileAvatar">👑</div>
+            <div class="profile-fields">
+              <div class="form-group">
+                <label>Display Name</label>
+                <input type="text" id="profileNameInput" value="KingSpikey">
+              </div>
+              <div class="form-group">
+                <label>Bio</label>
+                <textarea id="profileBioInput">Elite Vault Member & Reseller.</textarea>
+              </div>
+              <button class="btn-primary" id="saveProfileBtn">Save Profile</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 6. INVEST TAB -->
+      <section id="investTab" class="tab-content">
+        <div class="section-header">
+          <h2>Investment Vault</h2>
+          <p>Grow your vault balances with automated compounding returns.</p>
+        </div>
+        <div class="invest-card">
+          <h3>Solana & Crypto Staking Pool</h3>
+          <p>Current APY: <strong>14.8%</strong></p>
+          <div class="form-group">
+            <label>Amount to Stake ($)</label>
+            <input type="number" id="stakeAmount" value="50" min="5" max="5000">
+          </div>
+          <button class="btn-primary" id="stakeBtn">Stake Funds</button>
+          <div id="stakeResult" class="game-result-msg"></div>
+        </div>
+      </section>
+
+      <!-- 7. OWNER DASHBOARD -->
+      <section id="ownerTab" class="tab-content">
+        <div class="section-header">
+          <h2>Owner Dashboard</h2>
+          <p>Restricted access: monitoring recent deposits, gift card payouts, and security logs.</p>
+        </div>
+        <div class="owner-controls">
+          <button class="btn-secondary" id="ownerLoginBtn">Owner Login</button>
+          <button class="btn-danger" id="clearDataBtn">Reset All Data</button>
+        </div>
+        <div class="owner-grid" id="ownerDashboardContent">
+          <div class="empty-state">Log in with owner credentials to view secured logs.</div>
+        </div>
+      </section>
+    </div>
+  </main>
+</div>
+
+<!-- Modal Checkout / Gift Card Details -->
+<div class="modal-overlay" id="cardModal">
+  <div class="modal-card">
+    <button class="modal-close" id="modalClose">&times;</button>
+    <div id="modalContent"></div>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
